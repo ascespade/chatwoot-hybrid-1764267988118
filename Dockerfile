@@ -4,9 +4,6 @@ FROM chatwoot/chatwoot:latest
 # Set working directory
 WORKDIR /app
 
-# Copy application files (if needed for customizations)
-# Otherwise, the base image already has Chatwoot installed
-
 # Expose port
 EXPOSE 3000
 
