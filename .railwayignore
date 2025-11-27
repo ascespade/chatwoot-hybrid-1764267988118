@@ -1,0 +1,3 @@
+# Railway will use Dockerfile for build
+# This file ensures Railway detects Dockerfile correctly
+
