@@ -2,7 +2,12 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "DOCKERFILE",
-    "dockerfilePath": "Dockerfile"
+    "dockerfilePath": "Dockerfile",
+    "args": {
+      "ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY": "$ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY",
+      "ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY": "$ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY",
+      "ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT": "$ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT"
+    }
   },
   "deploy": {
     "startCommand": "bundle exec rails s -b 0.0.0.0 -p $PORT",
