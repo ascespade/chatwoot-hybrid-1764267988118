@@ -1,23 +1,10 @@
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "Dockerfile"
+dockerfilePath = "./Dockerfile"
 
 [deploy]
-startCommand = "bundle exec rails s -b 0.0.0.0 -p $PORT"
-restartPolicyType = "on_failure"
+restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 
 [service]
 name = "chatwoot"
-
-# Environment variables will be set automatically by Railway
-# DATABASE_URL and REDIS_URL will be auto-linked from Postgres and Valkey services
-[service.variables]
-RAILS_ENV = "production"
-NODE_ENV = "production"
-INSTALLATION_ENV = "docker"
-RAILS_LOG_TO_STDOUT = "true"
-RAILS_SERVE_STATIC_FILES = "true"
-ACTION_MAILER_DEFAULT_FROM = "chatwoot@example.com"
-RAILS_MAX_THREADS = "5"
-WEB_CONCURRENCY = "2"

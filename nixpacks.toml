@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ["nodejs-18_x", "ruby"]
+
+[phases.install]
+cmds = ["echo 'Using Dockerfile, skipping Nixpacks'"]
