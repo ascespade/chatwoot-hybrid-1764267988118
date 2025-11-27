@@ -11,7 +11,7 @@ restartPolicyMaxRetries = 10
 name = "chatwoot"
 
 # Environment variables will be set automatically by Railway
-# from Postgres and Valkey services in the same project
+# DATABASE_URL and REDIS_URL will be auto-linked from Postgres and Valkey services
 [service.variables]
 RAILS_ENV = "production"
 NODE_ENV = "production"

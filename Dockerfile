@@ -4,6 +4,9 @@ FROM chatwoot/chatwoot:latest
 # Set working directory
 WORKDIR /app
 
+# Copy application files (if needed for customizations)
+# Otherwise, the base image already has Chatwoot installed
+
 # Expose port
 EXPOSE 3000
 
@@ -12,4 +15,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:3000/api || exit 1
 
 # Start Rails server
+# Railway will set PORT environment variable automatically
 CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0", "-p", "${PORT:-3000}"]
