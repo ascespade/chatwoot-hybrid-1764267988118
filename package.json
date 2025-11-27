@@ -1,0 +1,31 @@
+{
+  "name": "chatwoot-hybrid-mcp",
+  "version": "1.0.0",
+  "description": "MCP tool for automated Chatwoot hybrid deployment (Render + Supabase + Railway)",
+  "type": "module",
+  "main": "run.js",
+  "scripts": {
+    "deploy": "node auto-deploy.js",
+    "auto": "node auto-deploy.js",
+    "start": "node deploy.js",
+    "run": "node run.js"
+  },
+  "keywords": [
+    "chatwoot",
+    "deployment",
+    "render",
+    "supabase",
+    "railway",
+    "mcp",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

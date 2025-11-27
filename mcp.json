@@ -1,0 +1,66 @@
+{
+  "name": "chatwoot_hybrid_auto",
+  "version": "1.0.0",
+  "description": "Full automated hybrid Chatwoot deployment using Render + Supabase + Railway",
+  "type": "module",
+  "main": "run.js",
+  "scripts": {
+    "deploy": "node run.js",
+    "start": "node run.js"
+  },
+  "keywords": [
+    "chatwoot",
+    "deployment",
+    "render",
+    "supabase",
+    "railway",
+    "mcp",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "tools": [
+    {
+      "name": "chatwootDeployer",
+      "description": "Deploys Chatwoot using hybrid architecture (Render + Supabase + Railway). Automatically creates Redis on Railway, configures Supabase database, generates render.yaml, and pushes to GitHub.",
+      "command": "node run.js",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "github_repo": {
+            "type": "string",
+            "description": "GitHub repository URL (e.g., https://github.com/username/repo.git)"
+          },
+          "supabase_key": {
+            "type": "string",
+            "description": "Supabase service role key (for database operations)"
+          },
+          "supabase_url": {
+            "type": "string",
+            "description": "Supabase database connection URL (PostgreSQL connection string)"
+          },
+          "render_api_key": {
+            "type": "string",
+            "description": "Render.com API key (for service management)"
+          },
+          "railway_token": {
+            "type": "string",
+            "description": "Railway API token (for Redis/Valkey service creation)"
+          },
+          "frontend_url": {
+            "type": "string",
+            "description": "Frontend URL where Chatwoot will be accessible (e.g., https://chatwoot.example.com)"
+          }
+        },
+        "required": [
+          "github_repo",
+          "supabase_key",
+          "supabase_url",
+          "render_api_key",
+          "railway_token",
+          "frontend_url"
+        ]
+      }
+    }
+  ]
+}

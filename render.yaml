@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: chatwoot-web
+    plan: free
+    region: oregon
+    buildCommand: |
+      export NODE_OPTIONS="--max-old-space-size=2048"
+      corepack enable
+      corepack prepare pnpm@10.2.0 --activate
+      bundle install --jobs 2 --retry 3
+      pnpm install --frozen-lockfile
+      bundle exec rails assets:precompile RAILS_ENV=production
+    startCommand: |
+      export RAILS_LOG_TO_STDOUT=true
+      bundle exec rails s -p $PORT -b 0.0.0.0
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql://postgres.qnbncesfxyfbrownxyor:Gr5dx73TCeDPPjRK@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres"
+      - key: REDIS_URL
+        value: "rediss://default:AY3vAAIncDJjYzAwNjU4Y2VhMjU0ZGQ5YTM0NmRjNTJhNGEyMTNhY3AyMzYzMzU@expert-scorpion-36335.upstash.io:6379"
+      - key: SECRET_KEY_BASE
+        value: "d8def62714a2a64f87f550db767e602ef1b048f7f1861104cbc80af3b3b8b27dfe7c3495d57f0725d7462f440988be430627562ea959469c04163bb1474e8ecb"
+      - key: FRONTEND_URL
+        value: "http://chatwoot-web-i2ht.onrender.com"
+      - key: RAILS_ENV
+        value: "production"
+      - key: NODE_ENV
+        value: "production"
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
+      - key: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - key: RAILS_MAX_THREADS
+        value: "5"
+      - key: WEB_CONCURRENCY
+        value: "2"
