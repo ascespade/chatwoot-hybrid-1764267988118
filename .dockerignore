@@ -1,13 +1,51 @@
-node_modules
+# Git
 .git
 .gitignore
+.gitattributes
+
+# Documentation
 *.md
+docs/
+README*
+
+# Environment
 .env
 .env.*
-*.log
-tmp
-log
-.DS_Store
-coverage
-.byebug_history
+!.env.example
 
+# Logs
+*.log
+log/
+tmp/
+
+# Dependencies (will be installed in container)
+node_modules/
+vendor/bundle/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Railway
+.railway/
+
+# Scripts (not needed in Docker)
+*.js
+*.sh
+!Dockerfile
+
+# Config files (keep only essential)
+*.json
+!package.json
+!package-lock.json

@@ -16,7 +16,7 @@ node deploy.js
 
 السكريبت سيسألك عن:
 - 🔗 GitHub Repository URL
-- 🗄️ Supabase Database URL  
+- 🗄️ Supabase Database URL
 - 🔑 Supabase Service Role Key
 - 🚂 Railway API Token
 - 🎨 Render API Key

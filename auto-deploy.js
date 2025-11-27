@@ -37,19 +37,19 @@ function extractEnvVars(filePath) {
     }
 
     // Try multiple variations of each key
-    const supabaseUrl = vars.SUPABASE_URL || vars.DATABASE_URL || vars.SUPABASE_DATABASE_URL || 
+    const supabaseUrl = vars.SUPABASE_URL || vars.DATABASE_URL || vars.SUPABASE_DATABASE_URL ||
                        vars.SUPABASE_DB_URL || vars.POSTGRES_URL || vars.POSTGRESQL_URL;
-    
+
     const supabaseKey = vars.SUPABASE_KEY || vars.SUPABASE_SERVICE_KEY || vars.SUPABASE_SERVICE_ROLE_KEY ||
                        vars.SUPABASE_ANON_KEY || vars.SUPABASE_API_KEY || 'not-provided';
-    
+
     const railwayToken = vars.RAILWAY_TOKEN || vars.RAILWAY_API_TOKEN || vars.RAILWAY_API_KEY;
-    
+
     const renderApiKey = vars.RENDER_API_KEY || vars.RENDER_API_TOKEN || vars.RENDER_KEY || 'not-provided';
-    
+
     const githubRepo = vars.GITHUB_REPO || vars.REPO_URL || vars.GITHUB_REPOSITORY || vars.REPOSITORY_URL ||
                       vars.GIT_REPO || vars.REPO;
-    
+
     const frontendUrl = vars.FRONTEND_URL || vars.APP_URL || vars.CHATWOOT_URL || vars.FRONTEND_DOMAIN ||
                        vars.DOMAIN || vars.URL || vars.BASE_URL;
 
@@ -103,7 +103,7 @@ async function main() {
       if (githubToken) {
         console.log('📦 GITHUB_REPO not found, but GITHUB_TOKEN exists...');
         console.log('   Attempting to create a new GitHub repository...\n');
-        
+
         try {
           const repoName = `chatwoot-hybrid-${Date.now()}`;
           const createRepoResp = await axios.post(
@@ -186,12 +186,12 @@ async function main() {
   } catch (error) {
     console.error('\n❌ AUTO-DEPLOYMENT FAILED:');
     console.error(`   ${error.message}\n`);
-    
+
     if (error.message.includes('File not found')) {
       console.log('💡 Make sure the file exists at:');
       console.log(`   ${ENV_FILE_PATH}\n`);
     }
-    
+
     if (error.message.includes('Missing required') || error.message.includes('Missing critical')) {
       console.log('💡 Make sure your ENV_VARS_COMPLETE.txt contains:');
       console.log('   - DATABASE_URL (for Supabase)');

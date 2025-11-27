@@ -1,124 +1,131 @@
-# 🚀 Chatwoot Hybrid MCP - Auto Deploy Tool
+# Chatwoot on Railway - One-Click Deploy
 
-أداة MCP تلقائية للنشر الهجين لـ Chatwoot باستخدام **Render + Supabase + Railway**.
+🚀 Deploy Chatwoot to Railway with one click. Just connect your GitHub repo and Railway will automatically:
+- Create Postgres database
+- Create Valkey (Redis) service  
+- Deploy Chatwoot web service
+- Configure all environment variables
+- Run database migrations
+- Start Chatwoot automatically
 
-## 📋 المميزات
+## 🎯 Quick Deploy
 
-- ✅ إنشاء Supabase Project تلقائياً
-- ✅ إنشاء Railway Redis (Valkey) تلقائياً
-- ✅ تجهيز `.env` كامل
-- ✅ تعديل `render.yaml` تلقائياً
-- ✅ رفع الكود إلى GitHub
-- ✅ تشغيل Migrations
-- ✅ إعداد Admin User
-
-## 🛠️ التثبيت
-
-### 1. تثبيت الاعتمادات
+### Step 1: Fork/Clone this Repository
 
 ```bash
-npm install
+git clone https://github.com/ascespade/chatwoot-hybrid-1764267988118.git
+cd chatwoot-hybrid-1764267988118
 ```
 
-### 2. إعداد MCP في Cursor
+### Step 2: Deploy to Railway
 
-ضع الملفات في:
-```
-.cursor/mcp/chatwoot_hybrid_auto/
-```
+1. Go to [Railway](https://railway.app)
+2. Click **"New Project"**
+3. Select **"Deploy from GitHub repo"**
+4. Choose this repository
+5. Railway will automatically:
+   - Detect `Dockerfile` and `railway.toml`
+   - Create services (Postgres, Valkey, Chatwoot)
+   - Set environment variables
+   - Deploy and start Chatwoot
 
-أو استخدم الملفات مباشرة من المجلد الحالي.
+### Step 3: Add Database Services
 
-## 📝 الاستخدام
+After Railway creates the project:
 
-### عبر Cursor MCP
+1. Click **"New"** → **"Database"** → **"Postgres"**
+2. Click **"New"** → **"Database"** → **"Valkey"** (Redis)
 
-1. افتح Cursor
-2. اكتب: `/chatwootDeployer`
-3. أدخل المعلومات المطلوبة:
-   - **GitHub Repo**: رابط الريبو (مثال: `https://github.com/username/repo.git`)
-   - **Supabase URL**: رابط قاعدة البيانات من Supabase
-   - **Supabase Key**: Service Role Key من Supabase
-   - **Railway Token**: Railway API Token
-   - **Render API Key**: Render API Key
-   - **Frontend URL**: رابط الواجهة الأمامية
+### Step 4: Configure Environment Variables
 
-### عبر Command Line
+Railway will automatically set:
+- `DATABASE_URL` from Postgres service
+- `REDIS_URL` from Valkey service
+
+You need to set manually:
+- `SECRET_KEY_BASE` - Generate with: `openssl rand -hex 64`
+- `FRONTEND_URL` - Your Railway app URL (e.g., `https://your-app.up.railway.app`)
+
+### Step 5: Run Migrations
+
+After first deploy, run migrations:
 
 ```bash
-node run.js
+railway run bundle exec rails db:chatwoot_prepare
 ```
 
-## 🔑 الحصول على المفاتيح المطلوبة
+Or use Railway Dashboard → Service → Shell → Run command
 
-### Supabase
-1. اذهب إلى [Supabase Dashboard](https://app.supabase.com)
-2. اختر Project
-3. Settings → API
-4. انسخ:
-   - **Database URL** (Connection string)
-   - **Service Role Key**
+## 🔄 Auto-Deploy
 
-### Railway
-1. اذهب إلى [Railway Dashboard](https://railway.app)
-2. Settings → Tokens
-3. أنشئ New Token
-4. انسخ الـ Token
+Every time you push to GitHub:
+- Railway automatically detects changes
+- Rebuilds the Docker image
+- Redeploys the service
+- No manual steps needed!
 
-### Render
-1. اذهب إلى [Render Dashboard](https://dashboard.render.com)
-2. Account Settings → API Keys
-3. أنشئ New API Key
-4. انسخ الـ Key
+## 📁 Project Structure
 
-## 📁 الملفات المُنشأة
+```
+.
+├── Dockerfile          # Chatwoot Docker configuration
+├── railway.toml        # Railway deployment config
+├── railway.json        # Railway JSON config (alternative)
+├── .dockerignore       # Files to ignore in Docker build
+└── README.md          # This file
+```
 
-بعد التشغيل، سيتم إنشاء:
+## 🔧 Configuration
 
-- `.env.deploy` - ملف البيئة الكامل
-- `render.yaml` - إعدادات Render
-- الملفات المرفوعة إلى GitHub
+All configuration is in `railway.toml`. Railway automatically:
+- Detects Dockerfile
+- Sets build commands
+- Configures start command
+- Links services (Postgres, Valkey)
 
-## 🎯 الخطوات التالية بعد النشر
+## 📝 Environment Variables
 
-1. **ربط GitHub مع Render**:
-   - اذهب إلى Render Dashboard
-   - New → Web Service
-   - اختر الريبو من GitHub
-   - Render سيكتشف `render.yaml` تلقائياً
+Required variables (set in Railway Dashboard):
 
-2. **تشغيل Migrations**:
-   - Migrations ستعمل تلقائياً في أول deployment
-   - أو شغّلها يدوياً عبر Render Shell
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `DATABASE_URL` | Auto-set from Postgres | `postgres://...` |
+| `REDIS_URL` | Auto-set from Valkey | `redis://...` |
+| `SECRET_KEY_BASE` | Rails secret key | `openssl rand -hex 64` |
+| `FRONTEND_URL` | Your app URL | `https://app.up.railway.app` |
+| `RAILS_ENV` | Environment | `production` |
 
-3. **إنشاء Admin User**:
-   ```bash
-   bundle exec rails console
-   User.create!(email: 'admin@example.com', password: 'secure_password', role: 'administrator')
-   ```
+## 🚀 Features
 
-## ⚠️ ملاحظات مهمة
+- ✅ One-click deploy from GitHub
+- ✅ Automatic service creation
+- ✅ Auto environment variable linking
+- ✅ Auto-redeploy on git push
+- ✅ Production-ready configuration
+- ✅ Free tier compatible
 
-- تأكد من أن GitHub repo موجود ومتاح
-- Railway قد يستغرق 10-30 ثانية لإنشاء Redis
-- Render يحتاج ربط الريبو يدوياً (أول مرة)
-- تأكد من صحة جميع المفاتيح قبل التشغيل
+## 📚 Resources
 
-## 🐛 استكشاف الأخطاء
+- [Railway Docs](https://docs.railway.app)
+- [Chatwoot Docs](https://www.chatwoot.com/docs)
+- [Railway Discord](https://discord.gg/railway)
 
-### خطأ في Railway
-- تأكد من صحة Railway Token
-- تحقق من أن الحساب لديه credits كافية
+## 🆘 Troubleshooting
 
-### خطأ في Supabase
-- تأكد من صحة Database URL
-- تحقق من Service Role Key
+### Service not starting?
+- Check logs: `railway logs`
+- Verify environment variables are set
+- Ensure Postgres and Valkey are running
 
-### خطأ في Git Push
-- تأكد من أن الريبو موجود
-- تحقق من Git credentials
+### Database connection failed?
+- Verify `DATABASE_URL` is set correctly
+- Check Postgres service is running
+- Run migrations: `bundle exec rails db:chatwoot_prepare`
 
-## 📄 الترخيص
+### Redis connection failed?
+- Verify `REDIS_URL` is set correctly
+- Check Valkey service is running
+
+## 📄 License
 
 MIT
-

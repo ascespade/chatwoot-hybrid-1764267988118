@@ -10,6 +10,8 @@ restartPolicyMaxRetries = 10
 [service]
 name = "chatwoot"
 
+# Environment variables will be set automatically by Railway
+# from Postgres and Valkey services in the same project
 [service.variables]
 RAILS_ENV = "production"
 NODE_ENV = "production"
@@ -17,3 +19,5 @@ INSTALLATION_ENV = "docker"
 RAILS_LOG_TO_STDOUT = "true"
 RAILS_SERVE_STATIC_FILES = "true"
 ACTION_MAILER_DEFAULT_FROM = "chatwoot@example.com"
+RAILS_MAX_THREADS = "5"
+WEB_CONCURRENCY = "2"

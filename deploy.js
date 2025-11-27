@@ -38,7 +38,7 @@ async function main() {
 
   // Import and run the main deployment function
   const { default: deployFunction } = await import('./run.js');
-  
+
   try {
     await deployFunction({
       github_repo: github_repo.trim(),
@@ -55,7 +55,7 @@ async function main() {
     console.log('2. Render will auto-detect render.yaml');
     console.log('3. Wait for first deployment (5-10 minutes)');
     console.log(`4. Your Chatwoot will be available at: ${frontend_url}`);
-    
+
   } catch (error) {
     console.error('\n❌ Deployment failed:', error);
     process.exit(1);

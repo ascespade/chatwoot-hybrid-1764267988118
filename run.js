@@ -62,7 +62,7 @@ WEB_CONCURRENCY="2"
     // ======================================================
     console.log('\n🔌 [2/8] Creating Redis (Valkey) on Railway…');
     let redisProjectId = '';
-    
+
     try {
       // Try Railway API v2
       const redisResp = await axios.post(
@@ -101,7 +101,7 @@ WEB_CONCURRENCY="2"
       console.log('   2. Create a new project: "chatwoot-redis"');
       console.log('   3. Add Valkey service');
       console.log('   4. Copy Redis connection URL to use later\n');
-      
+
       // Continue without Railway automation - user will set up manually
       console.log('⏭️  Skipping Railway automation, continuing with other steps...\n');
       redisProjectId = 'manual-setup-required';
@@ -174,7 +174,7 @@ WEB_CONCURRENCY="2"
     // ======================================================
     console.log('\n🌐 [4/8] Fetching Railway Redis connection info…');
     let redisURL = '';
-    
+
     // Check if REDIS_URL is already in env file
     const envContent = fs.existsSync(ENV_FILE_PATH) ? fs.readFileSync(ENV_FILE_PATH, 'utf8') : '';
     const redisUrlMatch = envContent.match(/REDIS_URL\s*=\s*["']?([^"'\n]+)["']?/);
@@ -182,7 +182,7 @@ WEB_CONCURRENCY="2"
       redisURL = redisUrlMatch[1].trim();
       console.log(`✔ Found existing REDIS_URL in env file`);
     }
-    
+
     // If Railway project was created, try to get Redis URL from Railway
     if (!redisURL && redisProjectId && redisProjectId !== 'manual-setup-required') {
       let retries = 0;

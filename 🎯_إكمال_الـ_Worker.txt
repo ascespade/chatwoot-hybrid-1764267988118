@@ -1,0 +1,53 @@
+🎯 إكمال Worker Service في Railway
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 من الصورة - المشروع موجود:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Project: honest-spirit
+✅ Project ID: 05d6dba2-fca6-4b83-b83e-da166ada8825
+✅ Services موجودة:
+   - Postgres ✅
+   - Valkey (Redis) ✅
+   - chatwoot ✅
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚡ إضافة Worker Service (خطوة واحدة):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+في Railway Dashboard:
+
+1. اضغط "New" (أو "+ Create")
+
+2. اختر "GitHub Repo"
+
+3. اختر الريبو: chatwoot-hybrid-1764267988118
+
+4. Service name: chatwoot-worker
+
+5. Start Command:
+   bundle exec sidekiq -C config/sidekiq.yml
+
+6. Environment Variables (من railway.toml):
+   DATABASE_URL=postgresql://postgres.qnbncesfxyfbrownxyor:Gr5dx73TCeDPPjRK@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres
+   REDIS_URL=rediss://default:AY3vAAIncDJjYzAwNjU4Y2VhMjU0ZGQ5YTM0NmRjNTJhNGEyMTNhY3AyMzYzMzU@expert-scorpion-36335.upstash.io:6379
+   SECRET_KEY_BASE=496340cf32015425b38067aa95814b012dba092019735fe5e0e68dd1251ddc2f95d24e2078c00ece55f2fbd4ba282b85bf7f98d4b0a1fc63df235498c6788a42
+   FRONTEND_URL=http://chatwoot-web-i2ht.onrender.com
+   RAILS_ENV=production
+   NODE_ENV=production
+   RAILS_LOG_TO_STDOUT=true
+   RAILS_MAX_THREADS=5
+
+7. اضغط "Deploy"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ بعد النشر:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Worker سيعمل تلقائياً
+✅ كل شيء جاهز!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 خطوة واحدة فقط في Railway Dashboard! 🚀
+
