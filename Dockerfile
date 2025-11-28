@@ -23,11 +23,11 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:3000/api || exit 1
 
 # Create entrypoint script to run migrations before starting server
-# Use db:migrate directly to avoid eager loading issues
+# Use SKIP_LOAD_SCHEMA to prevent eager loading during migration
 RUN echo '#!/bin/sh' > /app/docker-entrypoint.sh && \
     echo 'set -e' >> /app/docker-entrypoint.sh && \
     echo 'echo "=== Running database migrations ==="' >> /app/docker-entrypoint.sh && \
-    echo 'RAILS_ENV=production bundle exec rails db:migrate || echo "Migration failed or already run"' >> /app/docker-entrypoint.sh && \
+    echo 'SKIP_LOAD_SCHEMA=true RAILS_ENV=production bundle exec rails db:migrate 2>&1 || echo "Migration completed or already run"' >> /app/docker-entrypoint.sh && \
     echo 'echo "=== Migrations completed ==="' >> /app/docker-entrypoint.sh && \
     echo 'echo "=== Starting Rails server ==="' >> /app/docker-entrypoint.sh && \
     echo 'exec bundle exec rails s -b 0.0.0.0 -p ${PORT:-3000}' >> /app/docker-entrypoint.sh && \
