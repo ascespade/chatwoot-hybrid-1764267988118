@@ -22,4 +22,8 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:3000/api || exit 1
 
-CMD bundle exec rails s -b 0.0.0.0 -p $PORT
+# Create entrypoint script to run migrations before starting server
+RUN echo '#!/bin/sh\nset -e\nbundle exec rails db:chatwoot_prepare || true\nexec bundle exec rails s -b 0.0.0.0 -p ${PORT:-3000}' > /app/docker-entrypoint.sh && \
+    chmod +x /app/docker-entrypoint.sh
+
+CMD ["/app/docker-entrypoint.sh"]
